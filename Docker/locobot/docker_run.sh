@@ -73,6 +73,7 @@ docker run \
     -e ROS_IP=$ROS_IP \
     -v "$XAUTH:$XAUTH" \
     -v "/home/$USER/pyrobot-ws:/home/argsubt/pyrobot-ws" \
+    -v "/home/$USER/low_cost_ws_my:/home/argsubt/low_cost_ws_my" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
