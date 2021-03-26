@@ -1,9 +1,8 @@
-# InterbotiX X-Series Arm & Turret ROS Packages
-![banner](images/banner.png)
 
-NOTE: AS OF OCTOBER 29, 2020, THIS REPO IS IN LEGACY MODE!!!!!!
+# Examples for using PyRobot API to control ViperX-300 arm
 
-Check out the new and improved arm repo at https://github.com/Interbotix/interbotix_ros_manipulators or turret repo at https://github.com/Interbotix/interbotix_ros_turrets. No hardware changes are needed to use those repos. Please note that to work with the new code, you should either delete or rename your old *interbotix_ws* catkin workspace to something else. Also note, that if you are commanding arm (not turret) joint positions directly in your code (not by commanding an end-effector pose, but actually commanding a joint position directly), the positive direction of the 'elbow' and 'wrist_angle' joints have been inverted. This is to keep consistency in the ROS frames at each joint. So just flip the sign on those commands if needed in your custom ROS packages or python scripts.
+## Note
+For real robot, instructions are specifically for `ViperX-300` arm
 
 ## Overview
 Welcome to the *interbotix_ros_arms* repo! This repository contains ROS packages meant to be used with the many [X-Series robotic arms](https://www.trossenrobotics.com/robotic-arms.aspx) and [X-Series Turrets](https://www.trossenrobotics.com/c/robot-turrets.aspx) sold by Trossen Robotics. Packages were tested on Ubuntu Linux 16.04 & 18.04 using ROS Kinetic and ROS Melodic respectively. Communication with the robot is done over USB via the [U2D2](https://www.trossenrobotics.com/dynamixel-u2d2.aspx). This device converts USB signals to TTL which allows a computer to 'talk' with each of the [Dynamixel servo motors](https://www.trossenrobotics.com/dynamixel-x-series-robot-servos) that make up each robot. For the most part, the ROS nodes were written in C++ with a couple nodes written in Python. However, any programming language capable of sending ROS messages can be used to control the robots. To that effect, the core packages that make up this repo are as follows:
@@ -108,8 +107,3 @@ $ nano ~/.ignition/fuel/config.yaml
 Now change the url inside from `https://api.ignitionfuel.org` to `https://api.ignitionrobotics.org`.
 
 That ends the quickstart tutorial. To get familiar with the architecture and launch file arguments, refer to the READMEs of the core packages. Start with the [interbotix_descriptions](interbotix_descriptions/) package, then the [interbotix_sdk](interbotix_sdk/) package, followed by the [interbotix_gazebo](interbotix_gazebo/) package and lastly the [interbotix_moveit](interbotix_moveit/) package. This is the most logical approach to take as each package builds on top of the previous packages (for the most part). Afterwards, feel free to check out the examples in the [interbotix_examples](interbotix_examples/) directory.
-
-## Contributors
-- [Matt Trossen](https://www.trossenrobotics.com/) - **Project Lead**
-- [Solomon Wiznitzer](https://github.com/swiz23) - **ROS Engineer**
-- [Levi Todes](https://github.com/LeTo37) - **CAD Engineer**
