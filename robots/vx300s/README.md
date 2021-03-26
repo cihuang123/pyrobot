@@ -44,7 +44,7 @@ $ echo "source ~/interbotix_ws/devel/setup.bash" >> ~/.bashrc
 3. Change into your `src` directory and clone the repository (install 'git' first). Make sure to change the branch to either 'kinetic' or 'melodic' based on your ROS distro.
 ```
 $ cd ~/interbotix_ws/src
-$ git clone https://github.com/Interbotix/interbotix_ros_arms.git
+$ git clone https://github.com/ARG-NCTU/interbotix_ros_arms.git
 $ cd ~/interbotix_ws/src/interbotix_ros_arms
 $ git checkout <distro>
 ```
