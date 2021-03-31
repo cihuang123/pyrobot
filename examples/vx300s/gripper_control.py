@@ -1,4 +1,4 @@
-from interbotix_sdk.robot_manipulation import InterbotixRobot
+from interbotix_sdk.robot_manipulation_vx300s_short import InterbotixRobot
 from interbotix_descriptions import interbotix_mr_descriptions as mrd
 
 # This script closes and opens the gripper twice, changing the gripper pressure half way through
