@@ -9,10 +9,9 @@ _C = get_cfg_defaults()
 
 _C.HAS_BASE = False
 _C.HAS_CAMERA = False
-_C.HAS_GRIPPER = False
 
 _ARMC = _C.ARM
-_ARMC.CLASS = "VX300sArm"
+_ARMC.CLASS = "vx300sArm"
 _ARMC.ARM_ROBOT_DSP_PARAM_NAME= "robot_description"
 _ARMC.MOVEGROUP_NAME = "interbotix_arm"
 _ARMC.ARM_BASE_FRAME = "vx300s/base_link"
@@ -29,23 +28,20 @@ _ARMC.JOINT_NAMES = [
 
 _ARMC.ARM_MAX_JOINT_VELOCITY = 0.6
 
-# ur5 only allows setting joint angles through moveit
-# _ARMC.ROSTOPIC_SET_JOINT = '/robot/limb/right/joint_command'
-
 _ARMC.IK_POSITION_TOLERANCE = 0.01
 _ARMC.IK_ORIENTATION_TOLERANCE = 0.1
 
-# _GRIPPERC = _C.GRIPPER
+_GRIPPERC = _C.GRIPPER
 # # GRIPPER class name
-# _GRIPPERC.CLASS = 'ur5Gripper'
+_GRIPPERC.CLASS = 'vx300sGripper'
 # # maximum gripper open position
-# _GRIPPERC.GRIPPER_MAX_POSITION = 0.041667
+_GRIPPERC.GRIPPER_MAX_POSITION = 0.041667
 # # minimum gripper open position
-# _GRIPPERC.GRIPPER_MIN_POSITION = 0.0
+_GRIPPERC.GRIPPER_MIN_POSITION = 0.0
 # # maximum gripper movement velocity
-# _GRIPPERC.GRIPPER_MAX_VELOCITY = 3.0
+_GRIPPERC.GRIPPER_MAX_VELOCITY = 3.0
 # # minimum gripper movement velocity
-# _GRIPPERC.GRIPPER_MIN_VELOCITY = 0.15
+_GRIPPERC.GRIPPER_MIN_VELOCITY = 0.15
 
 
 def get_cfg():

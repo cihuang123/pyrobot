@@ -10,7 +10,7 @@ import rospy
 from pyrobot.core import Arm
 
 
-class VX300sArm(Arm):
+class vx300sArm(Arm):
     """
     This class has functionality to control a vx300s manipulator.
     """
@@ -25,7 +25,7 @@ class VX300sArm(Arm):
         :type configs: YACS CfgNode
         :type moveit_planner: string
         """
-        super(VX300sArm, self).__init__(
+        super(vx300sArm, self).__init__(
             configs=configs, moveit_planner=moveit_planner, use_moveit=True
         )
 
