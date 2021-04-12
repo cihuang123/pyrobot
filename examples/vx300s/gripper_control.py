@@ -1,5 +1,5 @@
-from interbotix_sdk.robot_manipulation_vx300s_short import InterbotixRobot
-from interbotix_descriptions import interbotix_mr_descriptions as mrd
+import time
+from pyrobot import Robot
 
 # This script closes and opens the gripper twice, changing the gripper pressure half way through
 #
@@ -7,12 +7,16 @@ from interbotix_descriptions import interbotix_mr_descriptions as mrd
 # Then change to this directory and type 'python gripper_control.py'
 
 def main():
-    arm = InterbotixRobot(robot_name="vx300s", mrd=mrd)
-    arm.close_gripper(2.0)
-    arm.open_gripper(2.0)
-    arm.set_gripper_pressure(1.0)
-    arm.close_gripper(2.0)
-    arm.open_gripper(2.0)
+    arm = Robot("vx300s", use_arm=True, use_base=False, use_camera=False, use_gripper=True)
+    arm.gripper.close()
+
+    arm.gripper.open()
+
+    arm.gripper.set_gripper_pressure(0.8)
+
+    arm.gripper.close()
+
+    arm.gripper.open()
 
 if __name__=='__main__':
     main()

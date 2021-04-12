@@ -14,7 +14,7 @@ class vx300sGripper(Gripper):
     Interface for gripper.
     """
 
-    def __init__(self, wait_time=2):
+    def __init__(self, configs, wait_time=2.0):
         """
         :param wait_time: waiting time for opening/closing gripper
         :type wait_time: float
