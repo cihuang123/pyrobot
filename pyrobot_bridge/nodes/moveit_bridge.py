@@ -49,9 +49,7 @@ class MoveitInterface(object):
         )
         self.moveit_server_.start()
 
-        self._traj_action = actionlib.SimpleActionClient(
-            "execute_trajectory", ExecuteTrajectoryAction
-        )
+        self._traj_action = actionlib.SimpleActionClient(sys.argv[1] + "/execute_trajectory", ExecuteTrajectoryAction)
 
         rospy.sleep(0.1)  # Ensures client spins up properly
         rospy.spin()
@@ -63,10 +61,14 @@ class MoveitInterface(object):
         """
         self.moveit_planner = rospy.get_param("pyrobot/moveit_planner")
         moveit_commander.roscpp_initialize(sys.argv)
+
         mg_name = rospy.get_param("pyrobot/move_group_name")
-        self.moveit_group = moveit_commander.MoveGroupCommander(mg_name)
+        rd_name = rospy.get_param("pyrobot/robot_description")
+
+	self.robot = moveit_commander.RobotCommander(rd_name,sys.argv[1])
+        self.scene = moveit_commander.PlanningSceneInterface(sys.argv[1])
+        self.moveit_group = moveit_commander.MoveGroupCommander(mg_name,rd_name,sys.argv[1])
         self.moveit_group.set_planner_id(self.moveit_planner)
-        self.scene = moveit_commander.PlanningSceneInterface()
 
         self.init_node = True
 
