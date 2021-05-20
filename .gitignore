@@ -158,3 +158,6 @@ tmp/*
 
 # docusaurus
 node_modules
+
+# on mac
+.DS_Store
