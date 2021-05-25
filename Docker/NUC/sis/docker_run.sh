@@ -50,18 +50,6 @@ if [ ! -z "$2" ]; then
 fi
 
 BASH_OPTION=bash
-# if [ ! -z "$3" ]; then
-#     if [ $3 = "husky1" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/husky1_gui.sh"
-#     fi
-#     if [ $3 = "husky2" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/husky2_gui.sh"
-#     fi
-#     if [ $3 = "df_gui" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/df_gui.sh"
-#     fi
-#     echo "run $3"
-# fi
 
 docker run \
     -it \
@@ -81,5 +69,5 @@ docker run \
     --privileged \
     --security-opt seccomp=unconfined \
     $DOCKER_OPTS \
-    argsis/sis:locobot \
+    argnctu/locobot:NUC-sis \
     $BASH_OPTION

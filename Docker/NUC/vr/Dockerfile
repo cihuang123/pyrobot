@@ -1,5 +1,4 @@
-
-FROM argsis/sis:locobot
+FROM argnctu/locobot:NUC-sis
 
 USER root
 
