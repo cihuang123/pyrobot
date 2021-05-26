@@ -14,14 +14,14 @@ Usage:
 
 **building docker image**
 ```
-laptop $ source docker/build.sh
+laptop $ source build.sh
 ```
 **How to run**
 ```
-laptop $ source xavier-nx_docker_run.sh
+laptop $ source docker_run.sh
 ```
     
 **If you want to enter same container**
 ```
-laptop $ source xavier-nx_docker_join.sh
+laptop $ source docker_join.sh
 ```
