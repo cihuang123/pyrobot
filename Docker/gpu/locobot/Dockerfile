@@ -39,6 +39,7 @@ Run apt-get update && apt-get install -y \
     e2fslibs-dev \
     libboost-all-dev \
     libaudit-dev \
+    tzdata \
     python3-pip
 
 ##################################### Pytorch ######################################
