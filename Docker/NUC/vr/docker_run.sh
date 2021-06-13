@@ -60,10 +60,10 @@ docker run \
     -e ROS_MASTER_URI=$ROS_MASTER_URI \
     -e ROS_IP=$ROS_IP \
     -v "$XAUTH:$XAUTH" \
-    -v "/home/$USER/pyrobot-add-rosbridge/examples:/home/sis/examples" \
+    -v "/home/$USER/pyrobot/examples:/home/sis/examples" \
     -v "/home/$USER/low_cost_ws_my:/home/sis/low_cost_ws_my" \
     -v "/home/$USER/pyrobot:/home/sis/pyrobot" \
-    -v "/home/$USER/VR-locobot:/home/sis/VR-locobot" \
+    -v "/home/$USER/unity-ros:/home/sis/unity-ros" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
