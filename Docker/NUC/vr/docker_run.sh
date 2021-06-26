@@ -63,7 +63,7 @@ docker run \
     -v "/home/$USER/pyrobot/examples:/home/sis/examples" \
     -v "/home/$USER/low_cost_ws_my:/home/sis/low_cost_ws_my" \
     -v "/home/$USER/pyrobot:/home/sis/pyrobot" \
-    -v "/home/$USER/unity-ros:/home/sis/unity-ros" \
+    -v "/home/$USER/GMU_NCTU_Unity_ROS:/home/sis/GMU_NCTU_Unity_ROS" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
