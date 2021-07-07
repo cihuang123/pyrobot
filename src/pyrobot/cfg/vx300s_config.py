@@ -12,6 +12,7 @@ _C.HAS_CAMERA = False
 
 _ARMC = _C.ARM
 _ARMC.CLASS = "vx300sArm"
+_ARMC.ROBOT_NAME = "vx300s"
 _ARMC.ARM_ROBOT_DSP_PARAM_NAME= "vx300s/robot_description"
 _ARMC.MOVEGROUP_NAME = "interbotix_arm"
 _ARMC.ARM_BASE_FRAME = "vx300s/base_link"

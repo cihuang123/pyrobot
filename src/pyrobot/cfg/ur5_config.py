@@ -13,6 +13,7 @@ _C.HAS_GRIPPER = False
 
 _ARMC = _C.ARM
 _ARMC.CLASS = "UR5Arm"
+_ARMC.ROBOT_NAME = "ur5"
 _ARMC.ARM_ROBOT_DSP_PARAM_NAME= "robot_description"
 _ARMC.MOVEGROUP_NAME = "manipulator"
 _ARMC.ARM_BASE_FRAME = "base_link"
