@@ -12,11 +12,11 @@ _C.HAS_CAMERA = False
 
 _ARMC = _C.ARM
 _ARMC.CLASS = "vx300sArm"
-_ARMC.ARM_ROBOT_DSP_PARAM_NAME= "robot_description"
+_ARMC.ARM_ROBOT_DSP_PARAM_NAME= "vx300s/robot_description"
 _ARMC.MOVEGROUP_NAME = "interbotix_arm"
 _ARMC.ARM_BASE_FRAME = "vx300s/base_link"
 _ARMC.EE_FRAME = "vx300s/ee_arm_link"
-_ARMC.ROSTOPIC_JOINT_STATES = "joint_states"
+_ARMC.ROSTOPIC_JOINT_STATES = "vx300s/joint_states"
 _ARMC.JOINT_NAMES = [
     "waist",
     "shoulder",

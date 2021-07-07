@@ -13,11 +13,11 @@ _C.HAS_GRIPPER = False
 
 _ARMC = _C.ARM
 _ARMC.CLASS = "UR5Arm"
-_ARMC.ARM_ROBOT_DSP_PARAM_NAME= "ur5/robot_description"
+_ARMC.ARM_ROBOT_DSP_PARAM_NAME= "robot_description"
 _ARMC.MOVEGROUP_NAME = "manipulator"
 _ARMC.ARM_BASE_FRAME = "base_link"
 _ARMC.EE_FRAME = "ee_link"
-_ARMC.ROSTOPIC_JOINT_STATES = "ur5/joint_states"
+_ARMC.ROSTOPIC_JOINT_STATES = "joint_states"
 _ARMC.JOINT_NAMES = [
     "shoulder_pan_joint",
     "shoulder_lift_joint",
