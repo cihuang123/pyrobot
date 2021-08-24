@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import rospy
 import rospkg
@@ -25,6 +25,8 @@ class Collect(object):
         self.traj_info = None
         self.rgb = None
         self.depth = None
+        self.traj_list = []
+        self.grasped_list = []
 
         self.cv_bridge = CvBridge()
         r = rospkg.RosPack()
@@ -46,6 +48,7 @@ class Collect(object):
         traj = rospy.Subscriber('/joint_states', JointState, self.traj_callback)
         grasped = rospy.Subscriber('/gripper/state', Int8, self.grasped_callback)
 
+        
         # save data
         self.save()
 
@@ -56,6 +59,9 @@ class Collect(object):
         try:
             self.trigger = True
             res.success = True
+            self.traj_list = []
+            self.grasped_list = []
+            self.number += 1
         except (rospy.ServiceException, rospy.ROSException) as e:
             res.success = False
             print("Service call failed: %s"%e)
@@ -69,28 +75,52 @@ class Collect(object):
         try:
             self.trigger = False
             res.success = True
-            self.number += 1
         except (rospy.ServiceException, rospy.ROSException) as e:
             res.success = False
             print("Service call failed: %s"%e)
         
         return res
-        
-    def writer_csv(self, path, file_name, data):
-
-        with open(os.path.join(path, file_name + '.csv'), 'wb') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow([data])
 
     def grasped_callback(self, msg):
 
-        self.grasped_info = msg
+        self.grasped_info = msg.data
 
     def traj_callback(self, msg):
 
         self.traj_info = msg.position[0:5]
+        
+    def writer_traj_csv(self, path, file_name, data, ti):
 
-    def register(self, rgb, depth):
+        dic = {}
+        joint = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5']
+        for i in range(5):
+            dic[joint[i]] = data[i]
+        dic['timestamp'] = ti
+        joint.append('timestamp')
+        self.traj_list.append(dic)
+
+        if not self.trigger:
+		with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
+
+		    writer = csv.DictWriter(csvfile, fieldnames = joint)
+		    writer.writeheader()
+		    writer.writerows(self.traj_list)
+
+    def writer_gra_csv(self, path, file_name, data, ti):
+
+        dic = {}
+        title = ['grasped_info', 'timestamp']
+        dic['timestamp'] = ti
+        dic['grasped_info'] = data
+        self.grasped_list.append(dic)
+        
+        if not self.trigger:
+		with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
+		    writer = csv.DictWriter(csvfile, fieldnames = title)
+		    writer.writeheader()
+		    writer.writerows(self.grasped_list)
+
+    def register(self, rgb, depth, traj, grasped):
 
         self.rgb = self.cv_bridge.imgmsg_to_cv2(rgb, "bgr8")
         self.depth = self.cv_bridge.imgmsg_to_cv2(depth, "16UC1")
@@ -117,13 +147,16 @@ class Collect(object):
                 if not os.path.exists(dep_path):
                     os.makedirs(dep_path)
 
-                self.writer_csv(log_path, "trajectory_info", self.traj_info)
-                self.writer_csv(log_path, "grasped_info", self.grasped_info)
-
                 ti = time.time()
+                timestamp = str(ti)
+                print(timestamp)
 
-                img_name = os.path.join(img_path, "{0}_img.jpg".format(ti))
-                depth_name = os.path.join(dep_path, "{0}_dep.npy".format(ti))
+                self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
+                self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
+
+                img_name = os.path.join(img_path, 
+timestamp + "_img.jpg")
+                depth_name = os.path.join(dep_path, timestamp + "_dep.npy")
                 
                 cv2.imwrite(img_name, self.rgb)
                 np.save(depth_name, self.depth)
