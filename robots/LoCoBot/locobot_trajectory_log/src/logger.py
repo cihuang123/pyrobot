@@ -26,7 +26,6 @@ class Collect(object):
         self.rgb = None
         self.depth = None
         self.nu = 1
-        
 
         self.cv_bridge = CvBridge()
         r = rospkg.RosPack()
@@ -48,7 +47,6 @@ class Collect(object):
         traj = rospy.Subscriber('/joint_states', JointState, self.traj_callback)
         grasped = rospy.Subscriber('/gripper/state', Int8, self.grasped_callback)
 
-        
         # save data
         self.save()
 
@@ -97,16 +95,14 @@ class Collect(object):
         dic['timestamp'] = ti
         joint.append('timestamp')
         self.traj_list = []
-        
         self.traj_list.append(dic)
-
         
         with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
 
             writer = csv.DictWriter(csvfile, fieldnames = joint)
             if self.nu == 1:
-	        writer.writeheader()
-	    writer.writerows(self.traj_list)
+                writer.writeheader()
+            writer.writerows(self.traj_list)
 
     def writer_gra_csv(self, path, file_name, data, ti):
 
@@ -117,12 +113,11 @@ class Collect(object):
         self.grasped_list = []
         self.grasped_list.append(dic)
         
-        
-	with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
-	    writer = csv.DictWriter(csvfile, fieldnames = title)
-	    if self.nu == 1:
-	        writer.writeheader()
-	    writer.writerows(self.grasped_list)
+        with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = title)
+            if self.nu == 1:
+                writer.writeheader()
+            writer.writerows(self.grasped_list)
 
     def register(self, rgb, depth):
 
@@ -153,13 +148,11 @@ class Collect(object):
 
                 ti = time.time()
                 timestamp = str(ti)
-                print(timestamp)
 
                 self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
                 self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
 
-                img_name = os.path.join(img_path, 
-timestamp + "_img.jpg")
+                img_name = os.path.join(img_path, timestamp + "_img.jpg")
                 depth_name = os.path.join(dep_path, timestamp + "_dep.npy")
                 
                 cv2.imwrite(img_name, self.rgb)

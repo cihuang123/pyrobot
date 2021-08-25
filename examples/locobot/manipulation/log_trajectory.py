@@ -32,17 +32,15 @@ def main():
     bot.arm.go_home()
     
     for joint in target_joints[1:-1:50]:
-        print(datetime.datetime.now())
+
         bot.arm.set_joint_positions([float(x) for x in joint[0:5]], plan=False)
         gripper_value = float(joint[5])
         if gripper_value > -0.024:
             bot.gripper.close()
         else: 
             bot.gripper.open()
-        #time.sleep(1)
 
     bot.arm.go_home()
-
 
 if __name__ == "__main__":
     main()
