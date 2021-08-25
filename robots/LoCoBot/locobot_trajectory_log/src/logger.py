@@ -25,12 +25,12 @@ class Collect(object):
         self.traj_info = None
         self.rgb = None
         self.depth = None
-        self.traj_list = []
-        self.grasped_list = []
+        self.nu = 1
+        
 
         self.cv_bridge = CvBridge()
         r = rospkg.RosPack()
-        self.path = os.path.join(r.get_path('collect_data'), "log")
+        self.path = os.path.join(r.get_path('locobot_trajectory_log'), "log")
 
         if not os.path.exists(self.path):
             os.makedirs(self.path)
@@ -59,9 +59,8 @@ class Collect(object):
         try:
             self.trigger = True
             res.success = True
-            self.traj_list = []
-            self.grasped_list = []
             self.number += 1
+            self.nu = 1
         except (rospy.ServiceException, rospy.ROSException) as e:
             res.success = False
             print("Service call failed: %s"%e)
@@ -97,14 +96,17 @@ class Collect(object):
             dic[joint[i]] = data[i]
         dic['timestamp'] = ti
         joint.append('timestamp')
+        self.traj_list = []
+        
         self.traj_list.append(dic)
 
-        if not self.trigger:
-		with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
+        
+        with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
 
-		    writer = csv.DictWriter(csvfile, fieldnames = joint)
-		    writer.writeheader()
-		    writer.writerows(self.traj_list)
+            writer = csv.DictWriter(csvfile, fieldnames = joint)
+            if self.nu == 1:
+	        writer.writeheader()
+	    writer.writerows(self.traj_list)
 
     def writer_gra_csv(self, path, file_name, data, ti):
 
@@ -112,15 +114,17 @@ class Collect(object):
         title = ['grasped_info', 'timestamp']
         dic['timestamp'] = ti
         dic['grasped_info'] = data
+        self.grasped_list = []
         self.grasped_list.append(dic)
         
-        if not self.trigger:
-		with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
-		    writer = csv.DictWriter(csvfile, fieldnames = title)
-		    writer.writeheader()
-		    writer.writerows(self.grasped_list)
+        
+	with open(os.path.join(path, file_name + '.csv'), 'a') as csvfile:
+	    writer = csv.DictWriter(csvfile, fieldnames = title)
+	    if self.nu == 1:
+	        writer.writeheader()
+	    writer.writerows(self.grasped_list)
 
-    def register(self, rgb, depth, traj, grasped):
+    def register(self, rgb, depth):
 
         self.rgb = self.cv_bridge.imgmsg_to_cv2(rgb, "bgr8")
         self.depth = self.cv_bridge.imgmsg_to_cv2(depth, "16UC1")
@@ -160,6 +164,7 @@ timestamp + "_img.jpg")
                 
                 cv2.imwrite(img_name, self.rgb)
                 np.save(depth_name, self.depth)
+                self.nu += 1
 
 if __name__ == "__main__":
 
