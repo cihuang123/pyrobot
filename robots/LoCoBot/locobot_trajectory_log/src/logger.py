@@ -86,13 +86,13 @@ class Collect(object):
 
     def traj_callback(self, msg):
 
-        self.traj_info = msg.position[0:5]
+        self.traj_info = msg.position[0:7]
         
     def writer_traj_csv(self, path, file_name, data, ti):
 
         dic = {}
-        joint = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5']
-        for i in range(5):
+        joint = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6', 'joint7']
+        for i in range(7):
             dic[joint[i]] = data[i]
         dic['timestamp'] = ti
         joint.append('timestamp')
