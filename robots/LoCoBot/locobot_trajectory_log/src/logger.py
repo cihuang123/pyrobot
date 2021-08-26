@@ -2,7 +2,6 @@
 
 import rospy
 import rospkg
-import argparse
 import os
 import time
 from std_srvs.srv import Trigger, TriggerResponse
@@ -161,11 +160,8 @@ class Collect(object):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Set up some initial parameter')
-
-    parser.add_argument('--number', type=int, default = 0)
-    args = parser.parse_args()
-
     rospy.init_node("collect_data_node")
-    collecter = Collect(args.number)
+
+    number = rospy.get_param("number")
+    collecter = Collect(number)
     rospy.spin()
