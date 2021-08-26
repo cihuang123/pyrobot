@@ -147,6 +147,7 @@ class Collect(object):
 
                 ti = time.time()
                 timestamp = str(ti)
+                time.sleep(0.1)
 
                 self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
                 self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
