@@ -15,7 +15,7 @@ import numpy as np
 import csv
 
 class Collect(object):
-    def __init__(self, number):
+    def __init__(self, number, fps):
 
         # parameter
         self.number = number
@@ -37,17 +37,22 @@ class Collect(object):
         start = rospy.Service("/start_collect", Trigger, self.start)
         stop = rospy.Service("/stop_collect", Trigger, self.stop)
 
+        fps = 10
+        delay = 1/float(fps)
+
         # ros subscriber
         img_rgb = message_filters.Subscriber('/camera/color/image_raw', Image)
         img_depth = message_filters.Subscriber('/camera/aligned_depth_to_color/image_raw', Image)
-        self.ts = message_filters.ApproximateTimeSynchronizer([img_rgb, img_depth], 5, 5)
+        ex_img_rgb = message_filters.Subscriber('/ex_side_camera/color/image_raw', Image)
+        ex_img_depth = message_filters.Subscriber('/ex_side_camera/aligned_depth_to_color/image_raw', Image)
+        self.ts = message_filters.ApproximateTimeSynchronizer([img_rgb, img_depth, ex_img_rgb, ex_img_depth], 5, 1)
         self.ts.registerCallback(self.register)
 
         traj = rospy.Subscriber('/joint_states', JointState, self.traj_callback)
         grasped = rospy.Subscriber('/gripper/state', Int8, self.grasped_callback)
 
         # save data
-        self.save()
+        rospy.Timer(rospy.Duration(delay), self.save)
 
     def start(self, req):
 
@@ -118,51 +123,67 @@ class Collect(object):
                 writer.writeheader()
             writer.writerows(self.grasped_list)
 
-    def register(self, rgb, depth):
+    def register(self, rgb, depth, ex_rgb, ex_depth):
 
         self.rgb = self.cv_bridge.imgmsg_to_cv2(rgb, "bgr8")
         self.depth = self.cv_bridge.imgmsg_to_cv2(depth, "16UC1")
         self.depth = np.array(self.depth) / 1000.0
 
-    def save(self):
+        self.ex_rgb = self.cv_bridge.imgmsg_to_cv2(ex_rgb, "bgr8")
+        self.ex_depth = self.cv_bridge.imgmsg_to_cv2(ex_depth, "16UC1")
+        self.ex_depth = np.array(self.ex_depth) / 1000.0
 
-        while True:
+    def Is_path_exists(self, path):
 
-            if self.trigger:
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-                rospy.loginfo('Start collect data!')
+    def save(self, event):
 
-                log_path = os.path.join(self.path, "log_{:03}".format(self.number))
-                img_path = os.path.join(log_path, "img")
-                dep_path = os.path.join(log_path, "dep")
+	    if self.trigger:
 
-                if not os.path.exists(log_path):
-                    os.makedirs(log_path)
+		rospy.loginfo('Start collect data!')
 
-                if not os.path.exists(img_path):
-                    os.makedirs(img_path)
+		log_path = os.path.join(self.path, "log_{:03}".format(self.number))
+		img_path = os.path.join(log_path, "img")
+		dep_path = os.path.join(log_path, "dep")
 
-                if not os.path.exists(dep_path):
-                    os.makedirs(dep_path)
+                top_img_path = os.path.join(img_path, "top")
+                top_dep_path = os.path.join(dep_path, "top")
 
-                ti = time.time()
-                timestamp = str(ti)
-                time.sleep(0.1)
+                side_img_path = os.path.join(img_path, "side")
+                side_dep_path = os.path.join(dep_path, "side")
 
-                self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
-                self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
+                Is_path_exists(log_path)
+                Is_path_exists(img_path)
+                Is_path_exists(dep_path)
+                Is_path_exists(top_img_path)
+                Is_path_exists(top_dep_path)
+                Is_path_exists(side_img_path)
+                Is_path_exists(side_dep_path)
 
-                img_name = os.path.join(img_path, timestamp + "_img.jpg")
-                depth_name = os.path.join(dep_path, timestamp + "_dep.npy")
-                
-                cv2.imwrite(img_name, self.rgb)
-                np.save(depth_name, self.depth)
-                self.nu += 1
+		ti = time.time()
+		timestamp = str(ti)
+
+		self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
+		self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
+
+		img_name = os.path.join(top_img_path, timestamp + "_img.jpg")
+		depth_name = os.path.join(top_dep_path, timestamp + "_dep.npy")
+                ex_img_name = os.path.join(side_img_path, timestamp + "_ex_img.jpg")
+		ex_depth_name = os.path.join(side_dep_path, timestamp + "_ex_dep.npy")
+	
+		cv2.imwrite(img_name, self.rgb)
+		np.save(depth_name, self.depth)
+                cv2.imwrite(ex_img_name, self.ex_rgb)
+		np.save(ex_depth_name, self.ex_depth)
+		self.nu += 1
 
 if __name__ == "__main__":
 
     rospy.init_node("collect_data_node")
 
     number = rospy.get_param("number")
-    collecter = Collect(number)
+    fps = rospy.get_param("fps")
+    collecter = Collect(number, fps)
     rospy.spin()

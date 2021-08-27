@@ -18,19 +18,28 @@ def transfer_hdf5(path, hdf5_path):
         grasped_info = genfromtxt(os.path.join(path, foldername, "grasped_info.csv"), delimiter=",", skip_header=1)
         trajectory_info = genfromtxt(os.path.join(path, foldername, "trajectory_info.csv"), delimiter=",", skip_header=1)
 
-        img = [os.path.join(path, foldername, "img", i) for i in os.listdir(os.path.join(path, foldername, "img"))]
-        dep = [os.path.join(path, foldername, "dep", i) for i in os.listdir(os.path.join(path, foldername, "dep"))]
+        top_img = [os.path.join(path, foldername, "img", "top", i) for i in os.listdir(os.path.join(path, foldername, "img", "top"))]
+        top_dep = [os.path.join(path, foldername, "dep", "top", i) for i in os.listdir(os.path.join(path, foldername, "dep". "top"))]
 
-        img = sorted(img)
-        dep = sorted(dep)
+        side_img = [os.path.join(path, foldername, "img", "side", i) for i in os.listdir(os.path.join(path, foldername, "img", "side"))]
+        side_dep = [os.path.join(path, foldername, "dep", "side", i) for i in os.listdir(os.path.join(path, foldername, "dep", "side"))]
 
-        for i in range(len(img)):
-            color = cv2.imread(img[i])
-            depth = np.load(dep[i])
+        top_img = sorted(top_img)
+        top_dep = sorted(top_dep)
+        side_img = sorted(side_img)
+        side_dep = sorted(side_dep)
 
-            ti = f.create_group(os.path.basename(img[i])[0:-8])
-            _ = ti.create_dataset("img", color.shape, dtype=color.dtype)
-            _ = ti.create_dataset("dep", depth.shape, dtype=np.float32)
+        for i in range(len(top_img)):
+            top_color = cv2.imread(top_img[i])
+            top_depth = np.load(top_dep[i])
+            side_color = cv2.imread(side_img[i])
+            side_depth = np.load(side_dep[i])
+
+            ti = f.create_group(os.path.basename(top_img[i])[0:-8])
+            _ = ti.create_dataset("top_img", top_color.shape, dtype=top_color.dtype)
+            _ = ti.create_dataset("top_dep", top_depth.shape, dtype=np.float32)
+            _ = ti.create_dataset("side_img", side_color.shape, dtype=side_color.dtype)
+            _ = ti.create_dataset("side_dep", side_depth.shape, dtype=np.float32)
             _ = ti.create_dataset("trajectory", trajectory_info[i].shape, dtype=np.float32)
             _.attrs.create("joint1", trajectory_info[i][0], dtype=np.float32)
             _.attrs.create("joint2", trajectory_info[i][1], dtype=np.float32)
@@ -44,8 +53,10 @@ def transfer_hdf5(path, hdf5_path):
             _.attrs.create("grasped_info", grasped_info[i][0], dtype=np.float32)
             _.attrs.create("timestamp", grasped_info[i][1], dtype=np.float64)
 
-            ti["img"][:] = color
-            ti["dep"][:] = depth
+            ti["top_img"][:] = top_color
+            ti["top_dep"][:] = top_depth
+            ti["side_img"][:] = side_color
+            ti["side_dep"][:] = side_depth
             ti["trajectory"][:] = trajectory_info[i]
             ti["grasped"][:] = grasped_info[i]
 
