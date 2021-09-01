@@ -37,7 +37,6 @@ class Collect(object):
         start = rospy.Service("/start_collect", Trigger, self.start)
         stop = rospy.Service("/stop_collect", Trigger, self.stop)
 
-        fps = 10
         delay = 1/float(fps)
 
         # ros subscriber
@@ -140,44 +139,44 @@ class Collect(object):
 
     def save(self, event):
 
-	    if self.trigger:
+        if self.trigger:
 
-		rospy.loginfo('Start collect data!')
+            rospy.loginfo('Start collect data!')
 
-		log_path = os.path.join(self.path, "log_{:03}".format(self.number))
-		img_path = os.path.join(log_path, "img")
-		dep_path = os.path.join(log_path, "dep")
+            log_path = os.path.join(self.path, "log_{:03}".format(self.number))
+            img_path = os.path.join(log_path, "img")
+            dep_path = os.path.join(log_path, "dep")
 
-                top_img_path = os.path.join(img_path, "top")
-                top_dep_path = os.path.join(dep_path, "top")
+            top_img_path = os.path.join(img_path, "top")
+            top_dep_path = os.path.join(dep_path, "top")
 
-                side_img_path = os.path.join(img_path, "side")
-                side_dep_path = os.path.join(dep_path, "side")
+            side_img_path = os.path.join(img_path, "side")
+            side_dep_path = os.path.join(dep_path, "side")
 
-                Is_path_exists(log_path)
-                Is_path_exists(img_path)
-                Is_path_exists(dep_path)
-                Is_path_exists(top_img_path)
-                Is_path_exists(top_dep_path)
-                Is_path_exists(side_img_path)
-                Is_path_exists(side_dep_path)
+            self.Is_path_exists(log_path)
+            self.Is_path_exists(img_path)
+            self.Is_path_exists(dep_path)
+            self.Is_path_exists(top_img_path)
+            self.Is_path_exists(top_dep_path)
+            self.Is_path_exists(side_img_path)
+            self.Is_path_exists(side_dep_path)
 
-		ti = time.time()
-		timestamp = str(ti)
+            ti = time.time()
+            timestamp = str(ti)
 
-		self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
-		self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
+            self.writer_traj_csv(log_path, "trajectory_info", self.traj_info, timestamp)
+            self.writer_gra_csv(log_path, "grasped_info", self.grasped_info, timestamp)
 
-		img_name = os.path.join(top_img_path, timestamp + "_img.jpg")
-		depth_name = os.path.join(top_dep_path, timestamp + "_dep.npy")
-                ex_img_name = os.path.join(side_img_path, timestamp + "_ex_img.jpg")
-		ex_depth_name = os.path.join(side_dep_path, timestamp + "_ex_dep.npy")
-	
-		cv2.imwrite(img_name, self.rgb)
-		np.save(depth_name, self.depth)
-                cv2.imwrite(ex_img_name, self.ex_rgb)
-		np.save(ex_depth_name, self.ex_depth)
-		self.nu += 1
+            img_name = os.path.join(top_img_path, timestamp + "_img.jpg")
+            depth_name = os.path.join(top_dep_path, timestamp + "_dep.npy")
+            ex_img_name = os.path.join(side_img_path, timestamp + "_ex_img.jpg")
+            ex_depth_name = os.path.join(side_dep_path, timestamp + "_ex_dep.npy")
+
+            cv2.imwrite(img_name, self.rgb)
+            np.save(depth_name, self.depth)
+            cv2.imwrite(ex_img_name, self.ex_rgb)
+            np.save(ex_depth_name, self.ex_depth)
+            self.nu += 1
 
 if __name__ == "__main__":
 
