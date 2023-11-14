@@ -60,7 +60,7 @@ source ~/pyrobot-ws/catkin_ws/src/scripts/set_orb_slam.sh
   ```bash
   sudo apt update
   sudo apt-get install curl
-  curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh
+  curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/main/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh
   ```
 
 * Run the script to install everything (ROS, realsense driver, etc.). 
