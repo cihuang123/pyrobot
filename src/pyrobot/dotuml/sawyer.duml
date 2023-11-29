@@ -1,0 +1,30 @@
+ClassDiagram{
+
+// sawyer/arm.py
+
+    // inherit from Arm
+    class SawyerArm{
+    
+    __init__(self, configs, moveit_planner)
+    go_home(self)
+    move_to_neutral(self)
+    get_collision_state(self)
+    _setup_joint_pub(self)
+    _callback_collision(self, data)
+    _pub_joint_positions(self, positions)
+    _pub_joint_velocities(self, velocities)
+    _pub_joint_torques(self, torques)
+    }
+
+// sawyer/gripper.py
+
+    // inherit from Gripper
+    class SawyerGripper{
+    
+    __init__(self, configs, ee_name, calibrate, wait_time)
+    open(self, position, wait)
+    reset(self, wait)
+    close(self, position, wait)
+    }
+
+}

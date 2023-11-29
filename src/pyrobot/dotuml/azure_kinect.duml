@@ -1,0 +1,19 @@
+ClassDiagram{
+
+// azure_kinect/camera.py
+
+    // from pyrobot.kinect2.camera import AzureKinectCamera  
+
+    // inherit from Kinect2Camera
+
+    class AzureKinectCamera{
+
+        __init__(self, configs)
+
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    AzureKinectCamera -g-> Kinect2Camera;
+
+}

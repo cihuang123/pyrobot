@@ -1,0 +1,19 @@
+ClassDiagram{
+
+// ur5/arm.py
+
+    // inherit from Arm
+    class UR5Arm{
+    
+    __init__(self, configs, moveit_planner)
+    go_home(self)
+    move_to_neutral(self)
+    _setup_joint_pub(self)
+    _pub_joint_positions(self, positions)
+    _pub_joint_velocities(self, velocities)
+    _pub_joint_torques(self, torques)
+    set_joint_velocities(self, velocities, kwargs)
+    }
+
+
+}

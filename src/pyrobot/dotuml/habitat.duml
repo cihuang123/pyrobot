@@ -1,0 +1,76 @@
+ClassDiagram{
+
+// habitat/base.py
+
+    // import numpy, math, pyrobot.utils.util, rospy, habitat_sim.agent, habitat_sim.utils, habitat_sim.errors, quaternion
+    // from habitat_sim.agent.controls import ActuationSpec
+    // from tf.transformations import euler_from_quaternion, euler_from_matrix
+
+    // inherit from object
+
+    class LoCoBotBase{
+
+        __init__(self, configs, simulator)
+        execute_action(self, action_name, actuation)
+        get_full_state(self)
+        _rot_matrix(self, habitat_quat)
+        get_state(self, state_type)
+        stop(self)
+        set_vel(self, fwd_speed, turn_speed, exe_time)
+        go_to_relative(self, xyt_position, use_map, close_loop, smooth)
+        go_to_absolute(self, xyt_position, use_map, close_loop, smooth)
+        _act(self, action_name, actuation)
+        _go_to_relative_pose(self, rel_x, rel_y, abs_yaw)
+        track_trajectory(self, states, controls, close_loop)
+    }
+
+// habitat/camera.py
+
+    // import numpy, pyrobot.utils.util, habitat_sim.agent, habitat_sim.utils 
+    // from pyrobot.core import Camera
+    // from pyrobot.utils.util import try_cv2_import
+    // from cv_bridge import CvBridge, CvBridgeError
+    // from pyrobot.locobot.camera import DepthImgProcessor
+    // from tf.transformations import euler_from_quaternion, euler_from_matrix
+
+    // inherit from object
+
+    class LoCoBotCamera{
+    
+        __init__(self, configs, simulator)
+        get_rgb(self)
+        get_depth(self)
+        get_rgb_depth(self)
+        get_intrinsics(self)
+        pix_to_3dpt(self, rs, cs, in_cam)
+        _cam2pyrobot(self, pts)
+        _rot_matrix(self, habitat_quat)
+        get_current_pcd(self, in_cam)
+        state(self)
+        get_state(self)
+        get_pan(self)
+        get_tilt(self)
+        set_pan(self, pan, wait)
+        set_tilt(self, tilt, wait)
+        _compute_relative_pose(self, pan, tilt)
+        set_pan_tilt(self, pan, tilt, wait)
+        reset(self)
+    }
+
+// habitat/simulator.py
+
+    // import copy, habitat_sim
+    // from pyrobot.habitat.sim_utils import make_cfg
+
+    // inherit from object
+
+    class HabitatSim{
+    
+        __init__(self, configs, scene_path, physics_config, seed)
+        get_agents()
+        get_sensors()
+        reset(self)
+        set_seed(self, new_seed)
+    }
+
+}

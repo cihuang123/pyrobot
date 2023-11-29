@@ -1,0 +1,124 @@
+ClassDiagram{
+
+    class object{
+    }
+
+// allegro_hand/gripper.py
+
+    // import numpy/rospy/threading/time
+    // from pyrobot.core import Gripper
+    // from std_msgs.msg import String
+    // from sensor_msgs.msg import JointState
+
+    // inhirit Gripper
+    class AllegroHand{
+
+        controller : string
+        joint_pub : bool
+        primitive_pub : bool
+        primitives
+        gripper_joint_names
+        gripper_dof : int
+        joint_state_lock
+        _joint_angles : dict
+        _joint_velocities : dict
+        _joint_efforts : dict
+
+        __init__(self, configs)
+        set_primitive(self, primitive, wait)
+        go_home(self)
+        move_to_neutral(self)
+        set_joint_velocities(self, velocities, kwargs)
+        set_joint_positions(self, positions, plan)
+        get_joint_angles(self)
+        get_joint_velocities(self)
+        get_joint_torques(self)
+        get_joint_angle(self, joint)
+        get_joint_velocity(self, joint)
+        get_joint_torque(self, joint)
+        set_joint_torques(self, torques, kwargs)
+        _pub_joint_torques(self, torques)
+        _callback_joint_states(self, msg)
+        _pub_joint_positions(self, positions)
+        _angle_error_is_small(self, target_joints)
+        _setup_joint_pub(self)
+        _setup_torque_pub(self)
+        _setup_primitive_pub(self)
+        open(self, kwargs)
+        close(self, kwargs)
+    }
+
+    class Robot{
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
+    }
+
+    class Base{
+    
+    __init__(self, configs)
+    stop(self)
+    set_vel(self, fwd_speed, turn_speed, exe_time)
+    go_to_relative(self, xyt_position, use_map, close_loop, smooth)
+    go_to_absolute(self, xyt_position, use_map, close_loop, smooth)
+    track_trajectory(self, states, controls, close_loop)
+    get_state(self, state_type)
+    }
+
+    class Gripper{
+    
+    __init__(self, configs)
+    open(self, kwargs)
+    close(self, kwargs)
+    }
+
+    class Camera{
+    
+    __init__(self, configs)
+    _sync_callback(self, rgb, depth)
+    _camera_info_callback(self, msg)
+    get_rgb(self)
+    get_depth(self)
+    get_rgb_depth(self)
+    get_intrinsics(self)
+    }
+
+    class Arm{
+    
+    __init__(self, configs, moveit_planner, planning_time, analytical_ik, use_moveit)
+    go_home(self)
+    pose_ee(self)
+    get_ee_pose(self, base_frame)
+    get_transform(self, src_frame, dest_frame)
+    get_joint_angles(self)
+    get_joint_velocities(self)
+    get_joint_torques(self)
+    get_joint_angle(self, joint)
+    get_joint_velocity(self, joint)
+    get_joint_torque(self, joint)
+    set_joint_positions(self, positions, plan, wait, kwargs)
+    make_plan_joint_positions(self, positions, kwargs)
+    set_joint_velocities(self, velocities, kwargs)
+    set_joint_torques(self, torques, kwargs)
+    set_ee_pose(self, position, orientation, plan, wait, numerical, kwargs)
+    make_plan_pose(self, position, orientation, wait, numerical, kwargs)
+    move_ee_xyz(self, displacement, eef_step, numerical, plan, wait,vkwargs)
+    _cancel_moveit_goal(self)
+    compute_fk_position(self, joint_positions, des_frame)
+    get_jacobian(self, joint_angles)
+    compute_fk_velocity(self, joint_positions, joint_velocities, des_frame)
+    compute_ik(self, position, orientation, qinit, numerical)
+    _callback_joint_states(self, msg)
+    _pub_joint_positions(self, positions)
+    _pub_joint_velocities(self, velocities)
+    _pub_joint_torques(self, torques)
+    _init_moveit(self)
+    _angle_error_is_small(self, target_joints)
+    _loop_angle_pub_cmd(self, cmd, joint_vals)
+    _setup_joint_pub(self)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    AllegroHand -g-> Gripper;
+
+}

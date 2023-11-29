@@ -1,0 +1,90 @@
+ClassDiagram{
+
+// vrep_locobot/arm.py
+
+    // inhirit from object
+    class LoCoBotArm{
+    
+    __init__(self, configs, simulator)
+    compute_fk_position(self, joint_positions)
+    compute_fk_velocity(self, joint_positions, joint_velocities, des_frame)
+    _quaternion_multiply(self, quaternion1, quaternion0)
+    compute_ik(self, position, orientation, qinit, numerical)
+    pose_ee(self)
+    get_ee_pose(self, base_frame)
+    go_home(self, plan)
+    get_transform(self, src_frame, dest_frame)
+    get_joint_angles(self)
+    get_joint_velocities(self)
+    get_joint_torques(self)
+    get_joint_angle(self, joint)
+    get_joint_velocity(self, joint)
+    get_joint_torque(self, joint)
+    set_joint_velocities(self, velocities, kwargs)
+    set_joint_torques(self, torques, kwargs)
+    set_joint_positions(self, positions, plan, wait, kwargs)
+    set_ee_pose(self, position, orientation, plan, wait, numerical, kwargs)
+    move_ee_xyz(self, displacement, eef_step, numerical, plan, kwargs)
+    set_ee_pose_pitch_roll(self, position, pitch, roll, plan, wait, numerical, kwargs)
+    }
+
+// vrep_locobot/base.py
+
+    // inhirit from object
+    class LoCoBotBase{
+    
+    __init__(self, configs, simulator)
+    get_full_state(self)
+    in_collision(self)
+    get_state(self)
+    stop(self)
+    set_vel(self, fwd_speed, turn_speed, exe_time)
+    go_to_relative(self, xyt_position, use_map, close_loop, smooth)
+    go_to_absolute(self, xyt_position, use_map, close_loop, smooth)
+    track_trajectory(self, states, controls, close_loop)
+    }
+
+// vrep_locobot/camera.py
+
+    // inhirit from Camera
+    class LoCoBotCamera{
+    
+    __init__(self, configs, simulator)
+    get_rgb(self)
+    get_depth(self)
+    get_rgb_depth(self)
+    get_intrinsics(self)
+    pix_to_3dpt(self, rs, cs, in_cam)
+    get_current_pcd(self, in_cam)
+    state(self)
+    get_state(self)
+    get_pan(self)
+    get_tilt(self)
+    set_pan(self, pan ,wait)
+    set_tilt(self, tilt, wait)
+    set_pan_tilt(self, pan, tilt, wait)
+    reset(self)
+    }
+
+// vrep_locobot/gripper.py
+
+    class LoCoBotGripper{
+    
+    __init__(self, configs, simulator, wait_time)
+    get_gripper_state(self)
+    open(self, wait)
+    close(self, wait)
+    reset(self, wait)
+    }
+
+// vrep_locobot/simulator.py
+
+    // inhirit from object
+    class VrepSim{
+    
+    __init__(self, configs, scene_path, seed)
+    __del__(self)
+    reset(self)
+    }
+
+}

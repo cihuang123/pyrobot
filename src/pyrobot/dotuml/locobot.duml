@@ -1,0 +1,252 @@
+ClassDiagram{
+
+// locobot/arm.py
+
+    // import numpy, rospy
+    // from locobot_control.analytic_ik import AnalyticInverseKinematics as AIK
+    // from locobot_control.srv import JointCommand
+    // from pyrobot.core import Arm
+    // from std_msgs.msg import Empty
+
+    // inherit from Arm
+
+    class LoCoBotArm{
+    
+        __init__(self, configs, control_mode, moveit_planne, use_moveit)
+        set_joint_velocities(self, velocities, kwargs)
+        set_joint_torque(self, joint_name, value)
+        set_ee_pose_pitch_roll(self, position, pitch, roll, plan, wait, numerical, kwargs)
+        set_joint_torques(self, torques, kwargs)
+        go_home(self, plan)
+    }
+
+// locobot/base_controllers.py
+
+    class ProportionalControl{
+
+    __init__(self, bot_base, ctrl_pub, configs, action_server)
+    _cmd_vel(self, lin_vel, rot_vel)
+    stop(self)
+    _norm_pose(self, data)
+    _step_angle(self, action)
+    _step_x(self, action)
+    goto(self, xyt_position)
+    _get_xyt(self, pose)
+    go_to_absolute(self, xyt_position, close_loop, smooth)
+    }
+
+    // inherit from TrajectoryTracker
+    class ILQRControl{
+    
+    __init__(self, bot_base, ctrl_pub, configs, action_server)
+    should_stop(self)
+    should_stop(self, value)
+    state(self)
+    go_to_relative(self, xyt_position, close_loop, smooth)
+    go_to_absolute(self, xyt_position, close_loop, smooth)
+    _compute_trajectory_no_map(self, start_pos, goal_pos, smooth, reverse)
+    track_trajectory(self, states, controls, close_loop)
+    }
+
+    // inherit from object
+    class MoveBaseControl{
+    
+    __init__(self, base_state, configs, action_server)
+    cancel_goal(self)
+    _move_base_status_callback(self, msg)
+    _send_action_goal(self, x, y, theta, frame)
+    go_to_absolute(self, xyt_position, close_loop, smooth)
+    }
+
+// locobot/base_control_utils.py
+
+    class MoveBasePlanner{
+    
+    __init__(self, configs, action_server)
+    _compute_relative_ang_dist(self, point2)
+    get_plan_absolute(self, x, y, theta)
+    parse_plan(self, plan)
+    move_to_goal(self, goal, go_to_relative)
+    get_state_trajectory_from_controls(start_pos, dt, controls)
+    get_control_trajectory(trajectory_type, T, v, w)
+    get_trajectory_circle(start_pos, dt, r, v, angle)
+    get_trajectory_negcircle(start_pos, dt, r, v, angle)
+    }
+
+    // inherit from object
+    class TrajectoryTracker{
+
+    __init__(self, system, action_server)
+    generate_plan(self, xs, us)
+    _compute_controls(self, start_state, plan)
+    stop(self)
+    execute_plan(self, plan, close_loop)
+    plot_plan_execution(self, file_name)
+    }
+
+    // inherit from object
+    class LQRSolver{
+
+    __init__(self, As, Bs, Cs, Qs, Rs, x_refs, u_refs)
+    solve(self)
+    _one_step(self, A, B, C, Q_q_q_, R, P_p_p_)
+    get_control(self, x, i)
+    get_control_ls(self, x, alpha, i)
+    get_cost_to_go(self, x, i)
+    }
+
+    // inherit from object
+    class ILQRSolver{
+    
+    __init__(self, dyn_fn, Q_fn, R_fn, start_state, goal_state)
+    unroll(self, dyn_fn, start_state, controls)
+    solve(self, init_controls, ilqr_iters)
+    get_step_size(self, lqr_, ref_controls, ref_cost, ilqr_iter)
+    }
+
+    class SimpleGoalState{
+    check_server_client_link(client)
+    }
+
+    class LocalActionStatus{
+    
+    }
+
+    // inherit from object
+    class LocalActionServer{
+    
+    __init__(self)
+    is_preempt_requested(self)
+    get_state(self)
+    _set_state(self, state)
+    cancel_goal(self)
+    set_preempted(self)
+    set_succeeded(self)
+    set_aborted(self)
+    set_active(self)
+    is_disabled(self)
+    disable(self)
+    is_available(self)
+    }
+
+// locobot/base
+
+    // inherit from object
+    class BaseSafetyCallbacks{
+    
+    __init__(self, base)
+    bumper_callback_create(self, data)
+    cliff_callback(self, data)
+    wheeldrop_callback(self, data)
+    bumper_callback_kobuki(self, date)
+    __del__(self)
+    }
+
+    // inherit from object
+    class XYTState{
+    
+    __init__(self)
+    update(self, x, y, theta)
+    state_f(self)
+    }
+
+    // inherit from BaseSafetyCallbacks
+    class BaseState{
+    
+    __init__(self, base, build_map, map_img_dir, configs)
+    _get_odom_state(self)
+    _odometry_callback(self, msg, state_var)
+    __del__(self)
+    }
+
+    // inherit from Base
+    class LoCoBotBase{
+    
+    __init__(self, configs, map_img_dir, base_controller, base_planner, base)
+    load_planner(self, base_planner)
+    load_controller(self, base_controller)
+    _execute_controller(self, goal)
+    _track_trajectory(self)
+    _go_to_absolute(self)
+    clean_shutdown(self)
+    get_state(self, state_type)
+    get_plan(self, xyt_position)
+    _wait(self, wait)
+    go_to_relative(self, xyt_position, use_map, close_loop, smooth, wait)
+    go_to_absolute(self, xyt_position, use_map, close_loop, smooth, wait)
+    get_last_goal_result(self)
+    cancel_last_goal(self, stop_robot)
+    track_trajectory(self, states, controls, close_loop, wait)
+    }
+
+// locobot/bicycla_model.py
+
+    //inherit from object
+    class Foo{
+    
+    __init__(self, kwargs)
+    __str__(self)
+    wrap_theta(theta)
+    subplot(plt, Y_X, sz_y_sz_x, space_y_x)
+    get_rng(rng)
+    }
+
+    class BicycleSystem{
+    
+    __init__(self, dt, min_v, max_v, min_w, max_w)
+    get_system_cost(self, x_traj, x_ref)
+    dynamics_fn(self, x_ref, u_ref)
+    get_control_cost(self, u_ref)
+    unroll(self, start_state, controls)
+    }
+
+// locobot/camera.py
+
+    // inherit from Camera
+    class SimpleCamera{
+    
+    __init__(self, configs)
+    get_current_pcd(self, in_cam)
+    pix_to_3dpt(self, rs, cs, in_cam)
+    get_link_transform(self, src, tgt)
+    }
+
+    // inherit from SimpleCamera
+    class LoCoBotCamera{
+    
+    __init__(self, configs)
+    _camera_pose_callback(self, msg)
+    state(self)
+    get_state(self)
+    get_pan(self)
+    get_tilt(self)
+    set_pan(self, pan, wait)
+    set_tilt(self, tilt, wait)
+    set_pan_tilt(self, pan, tilt, wait)
+    reset(self)
+    }
+
+    class DepthImgProcessor{
+    
+    __init__(self, subsample_pixs, depth_threshold, cfg_filename)
+    get_pix_3dpt(self, depth_im, rs, cs)
+    get_pcd_ic(self, depth_im, rgb_im)
+    get_pcd_iw(self, pts_in_cam, extrinsic_mat)
+    read_cfg(self, cfg_filename)
+    get_intrinsic(self)
+    }
+
+// locobot/gripper.py
+
+    // inherit from Gripper
+    class LoCoBotGripper{
+    
+    __init__(self, configs, wait_time)
+    get_gripper_state(self)
+    open(self, wait)
+    reset(self, wait)
+    close(self, wait)
+    _callback_gripper_state(self, msg)
+    }
+
+}

@@ -1,0 +1,65 @@
+ClassDiagram{
+
+// vx300s/arm.py
+
+    // inhirit from Arm
+    class vx300sArm{
+    
+    __init__(self, configs, moveit_planner)
+    go_home(self)
+    move_to_neutral(self)
+    _setup_joint_pub(self)
+    _pub_joint_positions(self, positions)
+    _pub_joint_velocities(self, velocities)
+    _pub_joint_torques(self, torques)
+    set_joint_velocities(self, velocities, kwargs)
+    }
+
+// vx300s/camera.py
+
+    // inhirit from Camera
+    class SimpleCamera{
+    
+    __init__(self, configs)
+    get_current_pcd(self, in_cam)
+    pix_to_3dpt(self, rs, cs, in_cam)
+    get_link_transform(self, src, tgt)
+    }
+
+    // inhirit from SimpleCamera
+    class LoCoBotCamera{
+    
+    __init__(self, configs)
+    _camera_pose_callback(self, msg)
+    state(self)
+    get_state(self)
+    get_pan(self)
+    get_tilt(self)
+    set_pan(self, pan, wait)
+    set_tilt(self, tilt, wait)
+    set_pan_tilt(self, pan, tilt, wait)
+    reset(self)
+    }
+
+    class DepthImgProcesso{
+    
+    __init__(self, subsample_pixs, depth_threshold, cfg_filename)
+    get_pix_3dpt(self, depth_im, rs, cs)
+    get_pcd_ic(self, depth_im, rgb_im)
+    get_pcd_iw(self, pts_in_cam, extrinsic_mat)
+    read_cfg(self, cfg_filename)
+    get_intrinsic(self)
+    }
+
+// vx300s/gripper.py
+
+    // inhirit from Gripper
+    class vx300sGripper{
+    
+    __init__(self, configs, wait_time)
+    open(self, position, wait)
+    set_gripper_pressure(self, pressure)
+    close(self, position, wait)
+    }
+
+}    

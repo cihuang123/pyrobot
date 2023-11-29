@@ -1,0 +1,16 @@
+ClassDiagram{
+
+// kinect2/camera.py
+
+    // so many :)
+
+    // inherit from Camera
+
+    class Kinect2Camera{
+
+        __init__(self, configs)
+        get_current_pcd(self)
+        pix_to_3dpt(self, rs, cs, reduce, k)
+    }
+
+}
