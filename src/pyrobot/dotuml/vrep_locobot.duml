@@ -2,8 +2,12 @@ ClassDiagram{
 
 // vrep_locobot/arm.py
 
-    // inhirit from object
     class LoCoBotArm{
+    configs
+    sim
+    arm
+    arm_base_link
+    ee_link
     
     __init__(self, configs, simulator)
     compute_fk_position(self, joint_positions)
@@ -30,8 +34,10 @@ ClassDiagram{
 
 // vrep_locobot/base.py
 
-    // inhirit from object
     class LoCoBotBase{
+    configs
+    sim
+    base
     
     __init__(self, configs, simulator)
     get_full_state(self)
@@ -48,6 +54,11 @@ ClassDiagram{
 
     // inhirit from Camera
     class LoCoBotCamera{
+    sim
+    rgb_cam
+    depth_cam
+    pan_joint
+    tilt_joint
     
     __init__(self, configs, simulator)
     get_rgb(self)
@@ -69,6 +80,9 @@ ClassDiagram{
 // vrep_locobot/gripper.py
 
     class LoCoBotGripper{
+    configs
+    sim
+    gripper
     
     __init__(self, configs, simulator, wait_time)
     get_gripper_state(self)
@@ -79,8 +93,9 @@ ClassDiagram{
 
 // vrep_locobot/simulator.py
 
-    // inhirit from object
     class VrepSim{
+    sim_config
+    sim
     
     __init__(self, configs, scene_path, seed)
     __del__(self)

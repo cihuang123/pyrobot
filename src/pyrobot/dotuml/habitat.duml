@@ -6,9 +6,13 @@ ClassDiagram{
     // from habitat_sim.agent.controls import ActuationSpec
     // from tf.transformations import euler_from_quaternion, euler_from_matrix
 
-    // inherit from object
-
     class LoCoBotBase{
+
+        configs
+        sim
+        agent
+        transform : bool
+        init_state
 
         __init__(self, configs, simulator)
         execute_action(self, action_name, actuation)
@@ -33,9 +37,14 @@ ClassDiagram{
     // from pyrobot.locobot.camera import DepthImgProcessor
     // from tf.transformations import euler_from_quaternion, euler_from_matrix
 
-    // inherit from object
-
     class LoCoBotCamera{
+
+        sim
+        configs
+        agent
+        depth_cam
+        pan : float
+        tilt : float
     
         __init__(self, configs, simulator)
         get_rgb(self)
@@ -62,9 +71,12 @@ ClassDiagram{
     // import copy, habitat_sim
     // from pyrobot.habitat.sim_utils import make_cfg
 
-    // inherit from object
-
     class HabitatSim{
+
+        sim_config
+        sim_config.PHYSICS_CONFIG_FILE
+        sim_config.PHYSICS : bool
+        sim
     
         __init__(self, configs, scene_path, physics_config, seed)
         get_agents()

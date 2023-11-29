@@ -12,8 +12,4 @@ ClassDiagram{
 
     }
 
-// a: Aggregation, c: Composition, g: inherit
-
-    AzureKinectCamera -g-> Kinect2Camera;
-
 }

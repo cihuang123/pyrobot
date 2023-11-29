@@ -15,5 +15,57 @@ ClassDiagram{
     set_joint_velocities(self, velocities, kwargs)
     }
 
+    class Arm{
+    configs
+    moveit_planner
+    planning_time
+    use_moveit
+    joint_state_lock
+    tf_listener
+    arm_joint_names
+    arm_dof : int
+    _joint_angles : dict
+    _joint_velocities : dict
+    _joint_efforts : dict
+    joint_pub : bool
+    _ik_service
+    _fk_service
+    
+    __init__(self, configs, moveit_planner, planning_time, analytical_ik, use_moveit)
+    go_home(self)
+    pose_ee(self)
+    get_ee_pose(self, base_frame)
+    get_transform(self, src_frame, dest_frame)
+    get_joint_angles(self)
+    get_joint_velocities(self)
+    get_joint_torques(self)
+    get_joint_angle(self, joint)
+    get_joint_velocity(self, joint)
+    get_joint_torque(self, joint)
+    set_joint_positions(self, positions, plan, wait, kwargs)
+    make_plan_joint_positions(self, positions, kwargs)
+    set_joint_velocities(self, velocities, kwargs)
+    set_joint_torques(self, torques, kwargs)
+    set_ee_pose(self, position, orientation, plan, wait, numerical, kwargs)
+    make_plan_pose(self, position, orientation, wait, numerical, kwargs)
+    move_ee_xyz(self, displacement, eef_step, numerical, plan, wait,vkwargs)
+    _cancel_moveit_goal(self)
+    compute_fk_position(self, joint_positions, des_frame)
+    get_jacobian(self, joint_angles)
+    compute_fk_velocity(self, joint_positions, joint_velocities, des_frame)
+    compute_ik(self, position, orientation, qinit, numerical)
+    _callback_joint_states(self, msg)
+    _pub_joint_positions(self, positions)
+    _pub_joint_velocities(self, velocities)
+    _pub_joint_torques(self, torques)
+    _init_moveit(self)
+    _angle_error_is_small(self, target_joints)
+    _loop_angle_pub_cmd(self, cmd, joint_vals)
+    _setup_joint_pub(self)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    UR5Arm -g-> Arm;
 
 }

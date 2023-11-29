@@ -8,6 +8,9 @@ ClassDiagram{
 
     class Kinect2Camera{
 
+        DepthMapFactor : float
+        intrinsic_mat : bool
+
         __init__(self, configs)
         get_current_pcd(self)
         pix_to_3dpt(self, rs, cs, reduce, k)

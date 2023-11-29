@@ -2,9 +2,18 @@ ClassDiagram{
 
 // utils/move_group_interface.py
 
-    // inherit from object
     class MoveGroupInterface{
-    
+    _group
+    _fixed_frame
+    _gripper_frame
+    _action
+    _traj_action
+    _cart_service
+    _mp_service
+    plan_only
+    planner_id : None
+    planning_time : float
+
     __init__(self, group, fixed_frame, gripper_frame, cart_srv, mp_srv, listener, plan_only)
     get_move_action(self)
     moveToJointPosition(self, joints, positions, tolerance, wait, kwargs)
@@ -18,8 +27,18 @@ ClassDiagram{
 
 // utils/planning_scene_interface.py
 
-    // inherit from object
     class PlanningSceneInterface{
+    _fixed_frame
+    _scene_pub
+    _apply_service
+    _mutex
+    _attached : list
+    _collision : list
+    _objects : dict
+    _attached_objects : dict
+    _removed : dict
+    _attached_removed : dict
+    _colors : dict
     
     __init__(self, frame, ns, init_from_service)
     sendUpdate(self, collision_object, attached_collision_object, use_service)
@@ -45,8 +64,10 @@ ClassDiagram{
 
 // utils/util.py
 
-    // inherit from object
     class MoveitObjectHandler{
+    planning_scene_interface
+    scene_objects : list
+    attached_objects : list
     
     __init__(self, frame)
     add_world_object(self, id_name, pose, size, frame)
