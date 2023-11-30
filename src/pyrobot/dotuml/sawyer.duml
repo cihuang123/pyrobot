@@ -6,6 +6,9 @@ ClassDiagram{
     class SawyerArm{
 
     collision_state_sub
+    configs
+    moveit_planner : str
+    use_moveit : bool
     
     __init__(self, configs, moveit_planner)
     go_home(self)
@@ -30,6 +33,16 @@ ClassDiagram{
     open(self, position, wait)
     reset(self, wait)
     close(self, position, wait)
+    }
+
+// core.py
+
+    class Robot{
+    configs : bool
+    robot_name
+    gripper
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
     }
 
     class Gripper{
@@ -93,5 +106,8 @@ ClassDiagram{
 
     SawyerArm -g-> Arm;
     SawyerGripper -g-> Gripper;
+    SawyerGripper -c-> SawyerArm;
+    Arm -a-> Robot;
+    Gripper -a-> Robot;
 
 }

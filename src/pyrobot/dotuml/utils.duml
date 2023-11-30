@@ -47,11 +47,11 @@ ClassDiagram{
     makeSolidPrimitive(self, name, solid, ps)
     makeAttached(self, link_name, obj, touch_links, detach_posture, weight)
     addMesh(self, name, ps, filename, use_service)
-    attachMesh(self, name, ps, filename, link_name, touch_links, detach_posture, weight, use_service,)
+    attachMesh(self, name, ps, filename, link_name, touch_links, detach_posture, weight, use_service)
     addSolidPrimitive(self, name, solid, ps, use_service)
     addCylinder(self, name, height, radius, ps, use_service)
     addBox(self, name, size_x, size_y, size_z, ps, use_service)
-    attachBox(self, name, size_x, size_y, size_z, pose, link_name, touch_links, detach_posture, weight, use_service,)
+    attachBox(self, name, size_x, size_y, size_z, pose, link_name, touch_links, detach_posture, weight, use_service)
     removeCollisionObject(self, name, use_service)
     removeAttachedObject(self, name, use_service)
     sceneCb(self, msg, initial)
@@ -81,5 +81,9 @@ ClassDiagram{
     remove_table(self)
     remove_gripper(self)
     }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    PlanningSceneInterface -c-> MoveitObjectHandler;
 
 }

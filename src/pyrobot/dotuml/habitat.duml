@@ -85,4 +85,19 @@ ClassDiagram{
         set_seed(self, new_seed)
     }
 
+// core.py
+
+    class Robot{
+    configs : bool
+    robot_name
+    gripper
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    LoCoBotBase -a-> Robot;
+    LoCoBotCamera -a-> Robot;
+
 }

@@ -4,6 +4,9 @@ ClassDiagram{
 
     // inhirit from Arm
     class vx300sArm{
+    configs
+    moveit_planner
+    use_moveit : bool
     
     __init__(self, configs, moveit_planner)
     go_home(self)
@@ -78,6 +81,16 @@ ClassDiagram{
     open(self, position, wait)
     set_gripper_pressure(self, pressure)
     close(self, position, wait)
+    }
+
+// core.py
+
+    class Robot{
+    configs : bool
+    robot_name
+    gripper
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
     }
 
     class Gripper{
@@ -165,5 +178,11 @@ ClassDiagram{
     SimpleCamera -g-> Camera;
     LoCoBotCamera -g-> SimpleCamera;
     vx300sGripper -g-> Gripper;
+    vx300sGripper -c-> vx300sArm;
+    LoCoBotCamera -a-> vx300sArm;
+    DepthImgProcesso -a-> LoCoBotCamera;
+    Arm -a-> Robot;
+    Gripper -a-> Robot;
+    Camera -a-> Robot;
 
 }    

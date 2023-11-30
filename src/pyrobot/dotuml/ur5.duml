@@ -15,6 +15,69 @@ ClassDiagram{
     set_joint_velocities(self, velocities, kwargs)
     }
 
+// allegro_hand/gripper.py
+
+    // import numpy/rospy/threading/time
+    // from pyrobot.core import Gripper
+    // from std_msgs.msg import String
+    // from sensor_msgs.msg import JointState
+
+    // inhirit Gripper
+    class AllegroHand{
+
+        controller : string
+        joint_pub : bool
+        primitive_pub : bool
+        primitives
+        gripper_joint_names
+        gripper_dof : int
+        joint_state_lock
+        _joint_angles : dict
+        _joint_velocities : dict
+        _joint_efforts : dict
+
+        __init__(self, configs)
+        set_primitive(self, primitive, wait)
+        go_home(self)
+        move_to_neutral(self)
+        set_joint_velocities(self, velocities, kwargs)
+        set_joint_positions(self, positions, plan)
+        get_joint_angles(self)
+        get_joint_velocities(self)
+        get_joint_torques(self)
+        get_joint_angle(self, joint)
+        get_joint_velocity(self, joint)
+        get_joint_torque(self, joint)
+        set_joint_torques(self, torques, kwargs)
+        _pub_joint_torques(self, torques)
+        _callback_joint_states(self, msg)
+        _pub_joint_positions(self, positions)
+        _angle_error_is_small(self, target_joints)
+        _setup_joint_pub(self)
+        _setup_torque_pub(self)
+        _setup_primitive_pub(self)
+        open(self, kwargs)
+        close(self, kwargs)
+    }
+
+// core.py
+
+    class Robot{
+    configs : bool
+    robot_name
+    gripper
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
+    }
+
+    class Gripper{
+    configs
+    
+    __init__(self, configs)
+    open(self, kwargs)
+    close(self, kwargs)
+    }
+
     class Arm{
     configs
     moveit_planner
@@ -67,5 +130,9 @@ ClassDiagram{
 // a: Aggregation, c: Composition, g: inherit
 
     UR5Arm -g-> Arm;
+    AllegroHand -g-> Gripper;
+    AllegroHand -a-> UR5Arm;
+    Arm -a-> Robot;
+    Gripper -a-> Robot;
 
 }

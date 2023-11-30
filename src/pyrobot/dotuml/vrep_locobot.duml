@@ -102,4 +102,21 @@ ClassDiagram{
     reset(self)
     }
 
+// core.py
+
+    class Robot{
+    configs : bool
+    robot_name
+    gripper
+    
+    __init__(self, robot_name, use_arm, use_base, use_camera, use_gripper, arm_config, base_config, camera_config, gripper_config, common_config)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    LoCoBotArm -a-> Robot;
+    LoCoBotBase -a-> Robot;
+    LoCoBotCamera -a-> Robot;
+    LoCoBotGripper -a-> Robot;
+
 }
