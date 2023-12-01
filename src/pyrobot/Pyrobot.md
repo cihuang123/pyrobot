@@ -125,13 +125,13 @@ classDiagram
     Arm <|-- vx300sArm : Inhirit
     Camera <|-- SimpleCamera : Inhirit
     SimpleCamera <|-- LoCoBotCamera : Inhirit
+    Gripper <|-- vx300sGripper : Inhirit
     vx300sArm *-- vx300sGripper : Composition
-    LoCoBotCamera o-- DepthImgProcesso : Aggregation
     vx300sArm o-- LoCoBotCamera : Aggregation
-    Robot o-- LoCoBotGripper : Aggregation
-    Robot o-- LoCoBotGripper : Aggregation
-    Robot o-- LoCoBotCamera : Aggregation
-    Robot o-- LoCoBotArm : Aggregation
+    LoCoBotCamera o-- DepthImgProcesso : Aggregation
+    Robot o-- Gripper : Aggregation
+    Robot o-- Camera : Aggregation
+    Robot o-- Arm : Aggregation
 
 ```
 
