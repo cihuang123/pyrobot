@@ -7,38 +7,7 @@ title : allegro_hand
 classDiagram
     Gripper <|-- AllegroHand : Inhirit
     Robot o-- Gripper : Aggregation
-    class Robot{
-        __init__()
-    }
-    class Gripper{
-        __init__()
-        open()
-        close()
-    }
-    class AllegroHand{
-        __init__()
-        set_primitive()
-        go_home()
-        move_to_neutral()
-        set_joint_velocities()
-        set_joint_positions()
-        get_joint_angles()
-        get_joint_velocities()
-        get_joint_torques()
-        get_joint_angle()
-        get_joint_velocity()
-        get_joint_torque()
-        set_joint_torques()
-        _pub_joint_torques()
-        _callback_joint_states()
-        _pub_joint_positions()
-        _angle_error_is_small()
-        _setup_joint_pub()
-        _setup_torque_pub()
-        _setup_primitive_pub()
-        open()
-        close()
-    } 
+
 ```
 
 ---
@@ -48,16 +17,6 @@ title : azure_kinect
 classDiagram
     Camera <|-- Kinect2Camera : Inhirit
     Kinect2Camera <|-- AzureKinectCamera : Inhirit
-    class Camera{
-    __init__()
-    _sync_callback()
-    _camera_info_callback()
-    get_rgb()
-    get_depth()
-    get_rgb_depth()
-    get_intrinsics()
-    }
-    
 
 ```
 
@@ -104,10 +63,10 @@ classDiagram
     Gripper <|-- LoCoBotGripper : Inhirit
     TrajectoryTracker <|-- ILQRControl : Inhirit
     BaseSafetyCallbacks <|-- BaseState : Inhirit
-    Robot o-- LoCoBotGripper : Aggregation
-    Robot o-- LoCoBotGripper : Aggregation
-    Robot o-- LoCoBotCamera : Aggregation
-    Robot o-- LoCoBotArm : Aggregation
+    Robot o-- Base : Aggregation
+    Robot o-- Gripper : Aggregation
+    Robot o-- Camera : Aggregation
+    Robot o-- Arm : Aggregation
 
 ```
 
@@ -138,7 +97,7 @@ classDiagram
 ```
 
 ---
-title : ur5
+title : util
 ---
 ```mermaid
 classDiagram
