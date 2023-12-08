@@ -1,0 +1,89 @@
+ClassDiagram{
+
+// utils/move_group_interface.py
+
+    class MoveGroupInterface{
+    _group
+    _fixed_frame
+    _gripper_frame
+    _action
+    _traj_action
+    _cart_service
+    _mp_service
+    plan_only
+    planner_id : None
+    planning_time : float
+
+    __init__(self, group, fixed_frame, gripper_frame, cart_srv, mp_srv, listener, plan_only)
+    get_move_action(self)
+    moveToJointPosition(self, joints, positions, tolerance, wait, kwargs)
+    moveToPose(self, pose, tolerance, wait, kwargs)
+    followCartesian(self, way_points, way_point_frame, max_step, jump_threshold, link_name,   start_state, avoid_collisions)
+    motionPlanToJointPosition(self, joints, positions, tolerance, wait, kwargs)
+    motionPlanToPose(self, pose, tolerance, wait, kwargs)
+    setPlannerId(self, planner_id)
+    setPlanningTime(self, time)
+    }
+
+// utils/planning_scene_interface.py
+
+    class PlanningSceneInterface{
+    _fixed_frame
+    _scene_pub
+    _apply_service
+    _mutex
+    _attached : list
+    _collision : list
+    _objects : dict
+    _attached_objects : dict
+    _removed : dict
+    _attached_removed : dict
+    _colors : dict
+    
+    __init__(self, frame, ns, init_from_service)
+    sendUpdate(self, collision_object, attached_collision_object, use_service)
+    clear(self)
+    makeMesh(self, name, ps, filename)
+    makeSolidPrimitive(self, name, solid, ps)
+    makeAttached(self, link_name, obj, touch_links, detach_posture, weight)
+    addMesh(self, name, ps, filename, use_service)
+    attachMesh(self, name, ps, filename, link_name, touch_links, detach_posture, weight, use_service)
+    addSolidPrimitive(self, name, solid, ps, use_service)
+    addCylinder(self, name, height, radius, ps, use_service)
+    addBox(self, name, size_x, size_y, size_z, ps, use_service)
+    attachBox(self, name, size_x, size_y, size_z, pose, link_name, touch_links, detach_posture, weight, use_service)
+    removeCollisionObject(self, name, use_service)
+    removeAttachedObject(self, name, use_service)
+    sceneCb(self, msg, initial)
+    getKnownCollisionObjects(self)
+    getKnownAttachedObjects(self)
+    waitForSync(self, max_time)
+    setColor(self, name, r, g, b, a)
+    sendColors(self)
+    }
+
+// utils/util.py
+
+    class MoveitObjectHandler{
+    planning_scene_interface
+    scene_objects : list
+    attached_objects : list
+    
+    __init__(self, frame)
+    add_world_object(self, id_name, pose, size, frame)
+    remove_world_object(self, id_name)
+    attach_arm_object(self, link_name, id_name, pose, size)
+    detach_arm_object(self, link_name, id_name, remove_from_world)
+    remove_all_objects(self)
+    add_table(self, pose, size)
+    add_kinect(self, pose, size)
+    add_gripper(self, pose, size)
+    remove_table(self)
+    remove_gripper(self)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    PlanningSceneInterface -c-> MoveitObjectHandler;
+
+}

@@ -1,0 +1,58 @@
+// contains the class diagram for the kinect2 & azure_kinect packages
+
+ClassDiagram{
+
+// azure_kinect/camera.py
+
+    // from pyrobot.kinect2.camera import AzureKinectCamera  
+
+    // inherit from Kinect2Camera
+
+    class AzureKinectCamera{
+
+        __init__(self, configs)
+
+    }
+
+// kinect2/camera.py
+
+    // inherit from Camera
+
+    class Kinect2Camera{
+
+        DepthMapFactor : float
+        intrinsic_mat : bool
+
+        __init__(self, configs)
+        get_current_pcd(self)
+        pix_to_3dpt(self, rs, cs, reduce, k)
+    }
+
+    class Camera{
+    configs
+    cv_bridge
+    camera_info_lock
+    camera_img_lock
+    rgb_img : bool
+    depth_img : bool
+    camera_info : bool
+    camera_P : bool
+    rgb_sub
+    depth_sub
+    sync
+    
+    __init__(self, configs)
+    _sync_callback(self, rgb, depth)
+    _camera_info_callback(self, msg)
+    get_rgb(self)
+    get_depth(self)
+    get_rgb_depth(self)
+    get_intrinsics(self)
+    }
+
+// a: Aggregation, c: Composition, g: inherit
+
+    Kinect2Camera -g-> Camera;
+    AzureKinectCamera -g-> Kinect2Camera;
+
+}
